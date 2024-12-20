@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.openclassrooms.MddApi.error.UserNotFoundException;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -56,5 +57,4 @@ public class User implements UserDetails {
     public String getUsername() {
         return this.username;
     }
-
 }

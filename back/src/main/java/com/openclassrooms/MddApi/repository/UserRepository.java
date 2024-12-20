@@ -9,4 +9,6 @@ import com.openclassrooms.MddApi.entity.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     public User findByEmail(String email);
+
+    public User findByUsernameOrEmail(String username, String email);
 }

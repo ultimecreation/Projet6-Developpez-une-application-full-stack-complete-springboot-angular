@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.MddApi.entity.User;
+import com.openclassrooms.MddApi.error.UserNotFoundException;
 import com.openclassrooms.MddApi.repository.UserRepository;
 
 @Service
@@ -34,8 +35,8 @@ public class UserService implements UserDetailsService {
      * @param email takes an email string
      * @return
      */
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User getByUsernameOrEmail(String username, String email) throws UserNotFoundException {
+        return userRepository.findByUsernameOrEmail(username, email);
     }
 
     /**

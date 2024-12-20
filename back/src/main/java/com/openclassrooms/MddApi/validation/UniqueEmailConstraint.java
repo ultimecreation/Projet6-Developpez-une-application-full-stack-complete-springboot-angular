@@ -12,7 +12,7 @@ import jakarta.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueEmailConstraint {
 
-    String message() default "Email already in use";
+    String message() default "L'e-mail est déjà utilisé";
 
     String email() default "";
 

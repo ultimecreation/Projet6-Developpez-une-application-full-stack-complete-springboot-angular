@@ -1,11 +1,13 @@
 package com.openclassrooms.MddApi.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,18 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.MddApi.dto.ApiResponse;
 import com.openclassrooms.MddApi.dto.JwtResponseDto;
 import com.openclassrooms.MddApi.dto.LoginDto;
 import com.openclassrooms.MddApi.dto.RegisterDto;
 import com.openclassrooms.MddApi.dto.UserResponseDto;
 import com.openclassrooms.MddApi.entity.User;
+import com.openclassrooms.MddApi.error.UserNotFoundException;
 import com.openclassrooms.MddApi.services.JwtService;
 import com.openclassrooms.MddApi.services.UserService;
 import org.springframework.security.core.Authentication;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/auth")
 public class AuthController {
@@ -48,7 +54,7 @@ public class AuthController {
      */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
-    public JwtResponseDto register(@Valid @RequestBody RegisterDto registerDto) {
+    public ResponseEntity<ApiResponse> register(@Valid @RequestBody RegisterDto registerDto) {
 
         String hashedPassword = passwordEncoder.encode(registerDto.getPassword());
 
@@ -60,8 +66,10 @@ public class AuthController {
         user.setUpdated_at(new Date());
         userService.saveUser(user);
 
-        JwtResponseDto jwtResponseDto = new JwtResponseDto(jwtService.generateJwtToken(user));
-        return jwtResponseDto;
+        ApiResponse apiResponse = ApiResponse.builder()
+                .jwtToken(jwtService.generateJwtToken(user))
+                .build();
+        return ResponseEntity.ok(apiResponse);
 
     }
 
@@ -71,14 +79,27 @@ public class AuthController {
      * @return JwtResponseDto
      */
     @PostMapping("/login")
-    public JwtResponseDto login(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginDto loginDto) {
 
+        User user = userService.getByUsernameOrEmail(loginDto.getEmail(), loginDto.getEmail());
+        if (user == null) {
+
+            HashMap<String, String> errors = new HashMap<>();
+            errors.put("invalidCredentials", "Les identifiants sont incorrects");
+            ApiResponse apiResponse = ApiResponse.builder()
+                    .errors(errors)
+                    .build();
+            return ResponseEntity.badRequest().body(apiResponse);
+
+        }
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+                new UsernamePasswordAuthenticationToken(user.getEmail(), loginDto.getPassword()));
 
-        User user = userService.getUserByEmail(loginDto.getEmail());
-        JwtResponseDto jwtResponseDto = new JwtResponseDto(jwtService.generateJwtToken(user));
-        return jwtResponseDto;
+        ApiResponse apiResponse = ApiResponse.builder()
+                .jwtToken(jwtService.generateJwtToken(user))
+                .build();
+        return ResponseEntity.ok(apiResponse);
+
     }
 
     /**

@@ -9,15 +9,15 @@ import lombok.Data;
 @Data
 public class RegisterDto {
 
-    @NotEmpty(message = "name is required")
+    @NotEmpty(message = "Le nom d'utilisateur est requis")
     private String username;
 
-    @NotEmpty(message = "email is required")
-    @Email(message = "invalid email format")
+    @NotEmpty(message = "L'E-mail est requis")
+    @Email(message = "Le format de l'e-mail n'est pas valide")
     @UniqueEmailConstraint
     private String email;
 
-    @NotEmpty(message = "password is required")
+    @NotEmpty(message = "Le mot de passe est requis")
     private String password;
 
 }
