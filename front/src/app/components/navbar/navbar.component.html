@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-md bd-body-primart">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="images/logo.png" height="81" alt="mdd">
+        </a>
+        <div class="d-md-none">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body d-flex flex-column justify-content-between">
+                    <ul class="navbar-nav text-end">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" routerLink="/"
+                                routerLinkActive="router-link-active">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/articles"
+                                routerLinkActive="router-link-active">Articles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/themes" routerLinkActive="router-link-active">Themes</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav text-end justify-self-end">
+                        <li class="nav-item dropup-center dropup">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <img src="images/user.png" height="28" alt="user">
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><button class="dropdown-item" (click)="handleLogout()">Logout</button></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapse navbar-collapse align-items-middle" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" routerLink="/"
+                        routerLinkActive="router-link-active">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/articles" routerLinkActive="router-link-active">Articles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/themes" routerLinkActive="router-link-active">Themes</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="images/user.png" height="28" alt="user">
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><button class="dropdown-item" (click)="handleLogout()">Logout</button></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

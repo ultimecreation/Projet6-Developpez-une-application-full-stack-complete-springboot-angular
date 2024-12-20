@@ -1,0 +1,11 @@
+div > img {
+  max-height: 350px;
+  max-width: 468;
+}
+.links {
+  a {
+    @media screen and (max-width: 770px) {
+      width: 170px;
+    }
+  }
+}
