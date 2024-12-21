@@ -10,9 +10,6 @@ import { RouterLink } from '@angular/router';
 })
 export class NavbarComponent {
 
-    private authService = inject(AuthService)
+    authService = inject(AuthService)
 
-    handleLogout() {
-        this.authService.logout()
-    }
 }

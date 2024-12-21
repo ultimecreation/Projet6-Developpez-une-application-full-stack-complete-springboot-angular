@@ -39,24 +39,31 @@ export class AuthService {
 
     logout() {
         localStorage.removeItem('mdd-token')
+        this.bearerToken = null
         this.isAuthenticated.set(false)
         return this.router.navigateByUrl('/')
     }
 
     getUserInfos() {
+
         return this.http.get<UserRequestInterface>('http://localhost:8080/api/auth/profile', {
             headers: {
                 "Authorization": this.bearerToken!
             }
         }
         );
+
+
     }
 
     saveUserToLocalStorage(token: string) {
         this.decodedToken = jwtDecode(token)
         if (this.tokenIsExpired(this.decodedToken.exp)) return false
-
+        if (localStorage.getItem('mdd-token') !== null) {
+            localStorage.removeItem('mdd-token')
+        }
         localStorage.setItem('mdd-token', `Bearer ${token}`)
+        this.bearerToken = `Bearer ${token}`
         this.isAuthenticated.set(true)
 
         return true

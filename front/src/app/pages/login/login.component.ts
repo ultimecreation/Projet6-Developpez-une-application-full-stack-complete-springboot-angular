@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { LoginRequestInterface } from '../../interfaces/LoginRequestInterface';
 import { Router } from '@angular/router';
 import { PageHeaderComponent } from "../../components/page-header/page-header.component";
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-login',
@@ -12,6 +13,7 @@ import { PageHeaderComponent } from "../../components/page-header/page-header.co
     styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
+    private location = inject(Location)
     private authService = inject(AuthService)
     private router = inject(Router)
     errorMsg = ""
@@ -25,6 +27,10 @@ export class LoginComponent implements OnInit {
         })
     }
 
+    handleGoBack() {
+        this.location.back()
+    }
+
     handleSubmit($event: Event) {
         this.errors = {}
         this.errorMsg = ""
@@ -35,7 +41,7 @@ export class LoginComponent implements OnInit {
             next: (data: any) => {
                 if (data.jwtToken) {
                     const success = this.authService.saveUserToLocalStorage(data.jwtToken)
-                    if (success) this.router.navigateByUrl('/')
+                    if (success) this.router.navigateByUrl('/profile')
                 }
 
             },

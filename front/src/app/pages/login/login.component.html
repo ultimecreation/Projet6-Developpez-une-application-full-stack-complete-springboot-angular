@@ -1,4 +1,23 @@
-<app-page-header title="Se connecter" />
+<div class=" d-block d-md-none">
+    <div class="d-flex flex-column  ">
+        <div (click)="handleGoBack()"><i class="bi bi-arrow-left"></i>
+        </div>
+        <div class="text-center "> <img src="images/logo.png" height="130" alt="mdd"></div>
+        <h1 class="mb-5 text-center ">Inscription</h1>
+    </div>
+</div>
+<div class=" d-none d-md-block">
+    <nav class="navbar navbar-expand-md bd-body-primary">
+        <div class="container">
+            <a class="navbar-brand">
+                <img src="images/logo.png" height="81" alt="mdd">
+            </a>
+        </div>
+    </nav>
+    <app-page-header title="Se connecter" />
+</div>
+
+
 <div class="col-md-6 mx-auto">
     <form [formGroup]="form" (submit)="handleSubmit($event)">
         <div class="mb-3">
