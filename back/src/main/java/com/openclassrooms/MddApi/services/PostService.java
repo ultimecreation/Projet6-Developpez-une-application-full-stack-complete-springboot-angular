@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.MddApi.entity.Post;
+import com.openclassrooms.MddApi.entity.Topic;
 import com.openclassrooms.MddApi.repository.PostRepository;
 
 @Service
@@ -20,5 +21,13 @@ public class PostService {
 
     public Post getPostById(int id) {
         return postRepository.findById(id).orElseThrow();
+    }
+
+    public Post createPost(Post post) {
+        return postRepository.save(post);
+    }
+
+    public Post save(Post post) {
+        return postRepository.save(post);
     }
 }

@@ -4,18 +4,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.MddApi.dto.ApiResponse;
 import com.openclassrooms.MddApi.dto.PostDto;
 import com.openclassrooms.MddApi.dto.PostListDto;
+import com.openclassrooms.MddApi.dto.PostRequestDto;
 import com.openclassrooms.MddApi.entity.Post;
+import com.openclassrooms.MddApi.entity.Topic;
+import com.openclassrooms.MddApi.entity.User;
 import com.openclassrooms.MddApi.services.PostService;
+import com.openclassrooms.MddApi.services.TopicService;
+import com.openclassrooms.MddApi.services.UserService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -24,6 +36,12 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private TopicService topicService;
 
     @GetMapping("/posts")
     public ResponseEntity<PostListDto> getAllPosts() {
@@ -40,6 +58,22 @@ public class PostController {
         Post post = postService.getPostById(id);
         PostDto postToReturn = new PostDto(post);
         return ResponseEntity.ok(postToReturn);
+    }
+
+    @PostMapping("/posts")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<ApiResponse> createPost(@Valid @RequestBody PostRequestDto postRequestDto) {
+        User author = userService.getUserById(Integer.parseInt(postRequestDto.getAuthor_id()));
+        Topic topic = topicService.getTopicById(Integer.parseInt(postRequestDto.getTopic_id()));
+        Post post = Post.builder()
+                .author(author)
+                .topic(topic)
+                .title(postRequestDto.getTitle())
+                .content(postRequestDto.getContent())
+                .build();
+        postService.save(post);
+        ApiResponse apiResponse = ApiResponse.builder().message("Post Created").build();
+        return ResponseEntity.ok(apiResponse);
     }
 
 }

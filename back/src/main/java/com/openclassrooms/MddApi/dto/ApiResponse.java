@@ -12,7 +12,7 @@ import lombok.Data;
 public class ApiResponse {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String data;
+    private String message;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private HashMap<String, String> errors;
