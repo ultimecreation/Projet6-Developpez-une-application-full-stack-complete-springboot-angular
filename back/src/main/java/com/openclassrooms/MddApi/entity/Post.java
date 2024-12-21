@@ -3,6 +3,8 @@ package com.openclassrooms.MddApi.entity;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import org.springframework.data.annotation.CreatedDate;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
@@ -38,5 +40,6 @@ public class Post {
     private String content;
 
     @JsonFormat(pattern = "yyyy-dd-MM")
+    @CreatedDate
     private LocalDateTime created_at;
 }

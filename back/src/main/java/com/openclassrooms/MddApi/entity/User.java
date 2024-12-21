@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -42,9 +44,11 @@ public class User implements UserDetails {
     // private List<Message> messages;
 
     @JsonFormat(pattern = "yyyy-dd-MM")
+    @CreatedDate
     private Date created_at;
 
     @JsonFormat(pattern = "yyyy-dd-MM")
+    @LastModifiedDate
     private Date updated_at;
 
     @Override
