@@ -1,0 +1,73 @@
+<div class="col-md-6 mx-auto">
+    @if(form){
+    <form [formGroup]="form" (submit)="handleSubmit($event)">
+        <div class="mb-3">
+            <label for="username" class="form-label mb-0">Nom d'utilisateur</label>
+            <input type="text" class="form-control" id="username" formControlName="username">
+            @if(usernameIsInvalid){
+            <div class="text-danger">
+                @if(username?.hasError('required')){
+                Le nom d'utilisateur est requis
+                }
+            </div>
+            }
+            @if(errors?.username){
+            <div class="text-danger">
+                {{ errors.username}}
+            </div>
+            }
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label mb-0">E-mail ou nom d'utilisateur</label>
+            <input type="text" class="form-control" id="email" formControlName="email">
+            @if(emailIsInvalid){
+            <div class="text-danger">
+                @if(email?.hasError('required')){
+                L'E-mail est requis
+                }
+            </div>
+            }
+            @if(errors?.email){
+            <div class="text-danger">
+                {{ errors.email}}
+            </div>
+            }
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label mb-0">Mot de passe</label>
+            <input type="password" class="form-control" id="password" autocomplete="password"
+                formControlName="password">
+            @if(passswordIsInvalid){
+            <div class="text-danger">
+                @if( password?.hasError('required') ){
+                Le mot de passe est requis
+                }
+            </div>
+            }
+            @if(errors?.password){
+            <div class="text-danger">
+                {{ errors.password}}
+            </div>
+            }
+        </div>
+        @if(errors?.invalidCredentials){
+        <div class="text-danger mb-3">
+            {{errors?.invalidCredentials}}
+        </div>
+        }
+        @if(errorMsg){
+        <div class="text-danger mb-3">
+            {{errorMsg}}
+        </div>
+        }
+        <div class="mb-3 text-center d-flex flex-column">
+            <button type="submit" class="btn btn-primary  mx-auto fw-bold">Sauvegarder</button>
+            <button type="submit" class="btn border-0   mx-auto text-danger fw-bold" (click)="handleLogout()">Se
+                déconnecter</button>
+        </div>
+    </form>
+    }
+
+
+</div>
