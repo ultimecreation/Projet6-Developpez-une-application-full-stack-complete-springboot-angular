@@ -2,8 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { LoginRequestInterface } from '../interfaces/LoginRequestInterface';
 import { jwtDecode } from 'jwt-decode';
-import { RegisterRequestInterface } from '../interfaces/RegisterRequestInterface';
 import { Router } from '@angular/router';
+import { UserRequestInterface } from '../interfaces/UserRequestInterface';
+import { RegisterRequestInterface } from '../interfaces/RegisterRequestInterface';
+import { UpdateRequestInterface } from '../interfaces/UpdateProfileRequestInterface';
 
 @Injectable({
     providedIn: 'root'
@@ -24,10 +26,30 @@ export class AuthService {
         return this.http.post('http://localhost:8080/api/auth/register', { ...registerRequest })
     }
 
+    updateProfile(updateProfileRequest: UpdateRequestInterface) {
+        return this.http.put('http://localhost:8080/api/auth/profile',
+            { ...updateProfileRequest },
+            {
+                headers: {
+                    "Authorization": this.bearerToken!
+                }
+            }
+        )
+    }
+
     logout() {
         localStorage.removeItem('mdd-token')
         this.isAuthenticated.set(false)
         return this.router.navigateByUrl('/')
+    }
+
+    getUserInfos() {
+        return this.http.get<UserRequestInterface>('http://localhost:8080/api/auth/profile', {
+            headers: {
+                "Authorization": this.bearerToken!
+            }
+        }
+        );
     }
 
     saveUserToLocalStorage(token: string) {
