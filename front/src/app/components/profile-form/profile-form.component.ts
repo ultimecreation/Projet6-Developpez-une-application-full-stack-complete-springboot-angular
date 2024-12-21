@@ -1,30 +1,40 @@
-import { Component, inject } from '@angular/core';
-import { PageHeaderComponent } from "../../components/page-header/page-header.component";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { RegisterRequestInterface } from '../../interfaces/RegisterRequestInterface';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UpdateRequestInterface } from '../../interfaces/UpdateProfileRequestInterface';
+
 
 @Component({
-    selector: 'app-register',
-    imports: [PageHeaderComponent, ReactiveFormsModule],
-    templateUrl: './register.component.html',
-    styleUrl: './register.component.scss'
+    selector: 'app-profile-form',
+    imports: [ReactiveFormsModule],
+    templateUrl: './profile-form.component.html',
+    styleUrl: './profile-form.component.scss'
 })
-export class RegisterComponent {
-
+export class ProfileFormComponent implements OnInit {
     private authService = inject(AuthService)
     private router = inject(Router)
+    userInfos: any = null
     errorMsg = ""
     errors: any = {}
     form: any = null
 
     ngOnInit(): void {
-        this.form = new FormGroup({
-            username: new FormControl('', [Validators.required]),
-            email: new FormControl('', [Validators.required, Validators.email]),
-            password: new FormControl('', [Validators.required])
+        this.authService.getUserInfos().subscribe({
+            next: (data: any) => {
+                this.userInfos = data
+
+                this.form = new FormGroup({
+                    username: new FormControl(this.userInfos.username, [Validators.required]),
+                    email: new FormControl(this.userInfos.email, [Validators.required, Validators.email]),
+                    password: new FormControl('', [Validators.required])
+                })
+
+
+            }
         })
+
+
     }
 
     handleSubmit($event: Event) {
@@ -32,12 +42,12 @@ export class RegisterComponent {
         this.errorMsg = ""
         $event.preventDefault()
         const { username, email, password } = this.form.value
-        const registerRequest: RegisterRequestInterface = { username, email, password }
-        this.authService.register(registerRequest).subscribe({
+        const updateProfileRequest: UpdateRequestInterface = { id: this.userInfos.id, username, email, password }
+        this.authService.updateProfile(updateProfileRequest).subscribe({
             next: (data: any) => {
                 if (data.jwtToken) {
                     const success = this.authService.saveUserToLocalStorage(data.jwtToken)
-                    if (success) this.router.navigateByUrl('/')
+                    if (success) window.location.reload()
                 }
 
             },
@@ -48,6 +58,10 @@ export class RegisterComponent {
                 }
             }
         })
+    }
+
+    handleLogout() {
+        this.authService.logout()
     }
 
     isDisabled() {

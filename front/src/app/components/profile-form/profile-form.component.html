@@ -1,5 +1,5 @@
-<app-page-header title="Inscription" />
 <div class="col-md-6 mx-auto">
+    @if(form){
     <form [formGroup]="form" (submit)="handleSubmit($event)">
         <div class="mb-3">
             <label for="username" class="form-label mb-0">Nom d'utilisateur</label>
@@ -61,10 +61,13 @@
             {{errorMsg}}
         </div>
         }
-        <div class="mb-3 text-center">
-            <button type="submit" class="btn btn-primary  fw-bold">Se connecter</button>
+        <div class="mb-3 text-center d-flex flex-column">
+            <button type="submit" class="btn btn-primary  mx-auto fw-bold">Sauvegarder</button>
+            <button type="submit" class="btn border-0   mx-auto text-danger fw-bold" (click)="handleLogout()">Se
+                déconnecter</button>
         </div>
     </form>
+    }
 
 
 </div>

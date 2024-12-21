@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md bd-body-primart">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" routerLink="/">
             <img src="images/logo.png" height="81" alt="mdd">
         </a>
         <div class="d-md-none">
@@ -17,54 +17,66 @@
                 <div class="offcanvas-body d-flex flex-column justify-content-between">
                     <ul class="navbar-nav text-end">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" routerLink="/"
-                                routerLinkActive="router-link-active">Home</a>
+                            <a class="nav-link" routerLink="/articles" type="button"
+                                data-bs-toggle="offcanvas">Articles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" routerLink="/articles"
-                                routerLinkActive="router-link-active">Articles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/themes" routerLinkActive="router-link-active">Themes</a>
+                            <a class="nav-link" routerLink="/themes" type="button" data-bs-toggle="offcanvas">Themes</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav text-end justify-self-end">
-                        <li class="nav-item dropup-center dropup">
+                        <li>
+                            <a class="dropdown-item" routerLink="/profile" type="button" data-bs-toggle="offcanvas">
+                                <img src="images/user.png" height="36" alt="user">
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item dropup-center dropup">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <img src="images/user.png" height="28" alt="user">
                             </a>
                             <ul class="dropdown-menu">
-                                <li><button class="dropdown-item" (click)="handleLogout()">Logout</button></li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/profile">Profil</a>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" (click)="handleLogout()">Déconnexion</button>
+                                </li>
                             </ul>
-                        </li>
+                        </li> -->
 
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="collapse navbar-collapse align-items-middle" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" routerLink="/"
-                        routerLinkActive="router-link-active">Home</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/articles" routerLinkActive="router-link-active">Articles</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/themes" routerLinkActive="router-link-active">Themes</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li>
+                    <a class="dropdown-item" routerLink="/profile" type="button" data-bs-toggle="offcanvas">
+                        <img src="images/user.png" height="36" alt="user">
+                    </a>
+                </li>
+                <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <img src="images/user.png" height="28" alt="user">
                     </a>
                     <ul class="dropdown-menu">
-                        <li><button class="dropdown-item" (click)="handleLogout()">Logout</button></li>
+                        <li>
+                            <a class="dropdown-item" routerLink="/profile">Profil</a>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" (click)="handleLogout()">Déconnexion</button>
+                        </li>
                     </ul>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class PageHeaderComponent {
 
     title = input<string>('')
+    invisible = input<boolean>(false)
 
     private location = inject(Location)
 
