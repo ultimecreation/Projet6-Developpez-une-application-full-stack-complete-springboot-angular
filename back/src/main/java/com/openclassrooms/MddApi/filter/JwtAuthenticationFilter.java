@@ -1,6 +1,7 @@
 package com.openclassrooms.MddApi.filter;
 
 import java.io.IOException;
+import java.net.http.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,31 +31,40 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String bearerToken = request.getHeader("Authorization");
-        String currentUrl = ((HttpServletRequest) request).getRequestURL().toString();
-
-        if (currentUrl.contains("/api/auth/me") || currentUrl.contains("/api/user")
-                || currentUrl.contains("/api/rental") || currentUrl.contains("/api/message")) {
-
-            if (bearerToken == null && !bearerToken.startsWith("Bearer ")) {
-                throw new IOException("Bearer token not found");
-            }
-
-            String jwt = bearerToken.substring(7);
-            Claims claims = jwtService.getTokenClaims(jwt);
-
-            if (claims == null) {
-                throw new IOException("Token not valid");
-            }
-
-            String email = claims.getSubject();
-            var userDetails = userService.loadUserByUsername(email);
-
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities());
-
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        final String header = request.getHeader("Authorization");
+        if (header == null || !header.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
         }
+
+        // String currentUrl = ((HttpServletRequest)
+        // request).getRequestURL().toString();
+
+        // if (currentUrl.contains("/api/auth/profile") ||
+        // currentUrl.contains("/api/user")
+        // || currentUrl.contains("/api/rental") || currentUrl.contains("/api/message"))
+        // {
+
+        // String bearerToken = request.getHeader("Authorization");
+        // if (bearerToken == null && !bearerToken.startsWith("Bearer ")) {
+        // throw new IOException("Bearer token not found");
+        // }
+
+        String jwt = header.substring(7);
+        Claims claims = jwtService.getTokenClaims(jwt);
+
+        if (claims == null) {
+            throw new IOException("Token not valid");
+        }
+
+        String email = claims.getSubject();
+        var userDetails = userService.loadUserByUsername(email);
+
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                userDetails, null, userDetails.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        // }
 
         filterChain.doFilter(request, response);
     }

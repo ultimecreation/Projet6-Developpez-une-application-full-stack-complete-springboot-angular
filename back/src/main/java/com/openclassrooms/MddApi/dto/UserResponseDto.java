@@ -11,7 +11,7 @@ import lombok.Data;
 public class UserResponseDto {
 
     private int id;
-    private String name;
+    private String username;
     private String email;
     @JsonFormat(pattern = "yyyy-dd-MM")
     private Date created_at;
@@ -20,7 +20,7 @@ public class UserResponseDto {
 
     public UserResponseDto(User user) {
         id = user.getId();
-        name = user.getUsername();
+        username = user.getUsername();
         email = user.getEmail();
         created_at = user.getCreated_at();
         updated_at = user.getUpdated_at();
