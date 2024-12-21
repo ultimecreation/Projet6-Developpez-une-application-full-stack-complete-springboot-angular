@@ -30,8 +30,8 @@ public class TopicController {
                 .map((Topic topic) -> new TopicDto(topic))
                 .collect(Collectors.toList());
 
-        TopicListDto topicListDto = new TopicListDto(topicDtoList);
-        return ResponseEntity.ok(topicListDto);
+        TopicListDto topicListToReturn = new TopicListDto(topicDtoList);
+        return ResponseEntity.ok(topicListToReturn);
     }
 
 }
