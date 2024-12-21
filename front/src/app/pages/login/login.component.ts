@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
             next: (data: any) => {
                 if (data.jwtToken) {
                     const success = this.authService.saveUserToLocalStorage(data.jwtToken)
-                    if (success) this.router.navigateByUrl('/')
+                    if (success) this.router.navigateByUrl('/profile')
                 }
 
             },

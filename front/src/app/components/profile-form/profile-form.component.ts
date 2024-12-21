@@ -1,8 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UpdateRequestInterface } from '../../interfaces/UpdateProfileRequestInterface';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,15 +13,18 @@ import { UpdateRequestInterface } from '../../interfaces/UpdateProfileRequestInt
     styleUrl: './profile-form.component.scss'
 })
 export class ProfileFormComponent implements OnInit {
+
     private authService = inject(AuthService)
-    private router = inject(Router)
+    private destroyRef = inject(DestroyRef)
+    subscription!: Subscription
     userInfos: any = null
     errorMsg = ""
     errors: any = {}
     form: any = null
 
     ngOnInit(): void {
-        this.authService.getUserInfos().subscribe({
+
+        const subscription = this.authService.getUserInfos().subscribe({
             next: (data: any) => {
                 this.userInfos = data
 
@@ -29,15 +33,15 @@ export class ProfileFormComponent implements OnInit {
                     email: new FormControl(this.userInfos.email, [Validators.required, Validators.email]),
                     password: new FormControl('', [Validators.required])
                 })
-
-
             }
         })
-
-
+        this.destroyRef.onDestroy(() => {
+            subscription.unsubscribe()
+        })
     }
 
     handleSubmit($event: Event) {
+        $event.preventDefault()
         this.errors = {}
         this.errorMsg = ""
         $event.preventDefault()
