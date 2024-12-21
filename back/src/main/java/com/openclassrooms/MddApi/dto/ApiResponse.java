@@ -1,7 +1,6 @@
 package com.openclassrooms.MddApi.dto;
 
 import java.util.HashMap;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

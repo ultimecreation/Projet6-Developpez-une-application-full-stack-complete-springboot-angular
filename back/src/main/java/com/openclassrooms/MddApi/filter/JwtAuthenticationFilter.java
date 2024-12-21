@@ -1,7 +1,6 @@
 package com.openclassrooms.MddApi.filter;
 
 import java.io.IOException;
-import java.net.http.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
