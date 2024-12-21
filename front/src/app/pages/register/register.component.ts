@@ -4,15 +4,18 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { RegisterRequestInterface } from '../../interfaces/RegisterRequestInterface';
+import { Location } from '@angular/common';
+import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
     selector: 'app-register',
-    imports: [PageHeaderComponent, ReactiveFormsModule],
+    imports: [PageHeaderComponent, ReactiveFormsModule, NavbarComponent],
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
 
+    private location = inject(Location)
     private authService = inject(AuthService)
     private router = inject(Router)
     errorMsg = ""
@@ -25,6 +28,9 @@ export class RegisterComponent {
             email: new FormControl('', [Validators.required, Validators.email]),
             password: new FormControl('', [Validators.required])
         })
+    }
+    handleGoBack() {
+        this.location.back()
     }
 
     handleSubmit($event: Event) {

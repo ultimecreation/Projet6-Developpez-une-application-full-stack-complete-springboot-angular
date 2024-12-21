@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { LoginRequestInterface } from '../../interfaces/LoginRequestInterface';
 import { Router } from '@angular/router';
 import { PageHeaderComponent } from "../../components/page-header/page-header.component";
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-login',
@@ -12,6 +13,7 @@ import { PageHeaderComponent } from "../../components/page-header/page-header.co
     styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
+    private location = inject(Location)
     private authService = inject(AuthService)
     private router = inject(Router)
     errorMsg = ""
@@ -23,6 +25,10 @@ export class LoginComponent implements OnInit {
             email: new FormControl('', [Validators.required]),
             password: new FormControl('', [Validators.required])
         })
+    }
+
+    handleGoBack() {
+        this.location.back()
     }
 
     handleSubmit($event: Event) {
