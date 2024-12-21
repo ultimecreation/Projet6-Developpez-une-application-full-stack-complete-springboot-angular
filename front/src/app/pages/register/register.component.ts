@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { PageHeaderComponent } from "../../components/page-header/page-header.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RegisterRequestInterface } from '../../interfaces/RegisterRequestInterface';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { RegisterRequestInterface } from '../../interfaces/RegisterRequestInterface';
 
 @Component({
     selector: 'app-register',
