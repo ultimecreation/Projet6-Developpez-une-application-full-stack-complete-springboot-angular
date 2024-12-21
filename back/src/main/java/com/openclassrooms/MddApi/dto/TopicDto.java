@@ -2,9 +2,7 @@ package com.openclassrooms.MddApi.dto;
 
 import com.openclassrooms.MddApi.entity.Topic;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class TopicDto {
