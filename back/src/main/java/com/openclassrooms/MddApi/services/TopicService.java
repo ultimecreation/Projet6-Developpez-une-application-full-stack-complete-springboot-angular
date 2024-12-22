@@ -18,6 +18,10 @@ public class TopicService {
         return topicRepository.findAll();
     }
 
+    public List<Topic> getAllTopicsToSubscribeToByUserId(Integer userId) {
+        return topicRepository.findAllTopicsNotSubscribeYetByUserId(userId);
+    }
+
     public Topic getTopicById(int id) {
         return topicRepository.findById(id).orElseThrow();
     }

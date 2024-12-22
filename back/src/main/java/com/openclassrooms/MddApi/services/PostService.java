@@ -18,9 +18,13 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> getUserFeed(List<Integer> ids) {
-        return postRepository.findAllByTopicIds(ids);
+    public List<Post> getUserFeed(Integer userId) {
+        return postRepository.findAllPostsByTopicsAndUserId(userId);
     }
+
+    // public List<Post> getUserFeed(List<Integer> ids) {
+    // return postRepository.findAllByTopicIds(ids);
+    // }
 
     public Post getPostById(int id) {
         return postRepository.findById(id).orElseThrow();

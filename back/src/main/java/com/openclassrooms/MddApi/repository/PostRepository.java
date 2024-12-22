@@ -11,6 +11,15 @@ import com.openclassrooms.MddApi.entity.Post;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
-    @Query(value = "SELECT p.* FROM posts p WHERE topic_id IN (:ids)", nativeQuery = true)
-    List<Post> findAllByTopicIds(List<Integer> ids);
+    String sqlString = """
+            SELECT p.* FROM posts p
+            WHERE topic_id
+            IN (
+                SELECT ut.topic_id FROM user_topics ut
+                WHERE ut.user_id=:userId
+            )
+            """;
+
+    @Query(value = sqlString, nativeQuery = true)
+    List<Post> findAllPostsByTopicsAndUserId(Integer userId);
 }

@@ -55,8 +55,8 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     /**
-     * @param authentication auth
-     * @return UserResponseDto
+     * @param authentication
+     * @return ResponseEntity<UserResponseDto>
      */
     @GetMapping("/profile")
     public ResponseEntity<UserResponseDto> profile(Authentication authentication) {
@@ -67,8 +67,9 @@ public class UserController {
     }
 
     /**
-     * @param authentication auth
-     * @return UserResponseDto
+     * @param updateProfileRequestDto
+     * @param authentication
+     * @return ResponseEntity<ApiResponse>
      */
     @PutMapping("/profile")
     public ResponseEntity<ApiResponse> profileUpdate(
@@ -91,11 +92,11 @@ public class UserController {
     }
 
     /**
-     * @param authentication auth
-     * @return UserResponseDto
+     * @param authentication
+     * @return ResponseEntity<TopicListDto>
      */
     @GetMapping("/topics")
-    public ResponseEntity<?> getUserTopics(Authentication authentication) {
+    public ResponseEntity<TopicListDto> getUserTopics(Authentication authentication) {
 
         int userId = ((User) authentication.getPrincipal()).getId();
         User userFound = userService.getUserById(userId);
@@ -108,8 +109,26 @@ public class UserController {
     }
 
     /**
-     * @param authentication auth
-     * @return UserResponseDto
+     * @param authentication
+     * @return ResponseEntity<ApiResponse>
+     */
+    @GetMapping("/topics-to-subscribe")
+    public ResponseEntity<?> getUserTopicsToSubscribe(Authentication authentication) {
+
+        int userId = ((User) authentication.getPrincipal()).getId();
+        List<Topic> topics = topicService.getAllTopicsToSubscribeToByUserId(userId);
+        List<TopicDto> topicDtoList = topics.stream()
+                .map((topic) -> new TopicDto(topic))
+                .collect(Collectors.toList());
+        TopicListDto topicListToReturn = new TopicListDto(topicDtoList);
+
+        return ResponseEntity.ok(topicListToReturn);
+    }
+
+    /**
+     * @param id
+     * @param authentication
+     * @return ResponseEntity<ApiResponse>
      */
     @PostMapping("/topics/add/{id}")
     public ResponseEntity<ApiResponse> addUserTopic(@PathVariable int id, Authentication authentication) {
@@ -126,12 +145,13 @@ public class UserController {
     }
 
     /**
-     * @param authentication auth
-     * @return UserResponseDto
+     * @param id
+     * @param authentication
+     * @return ResponseEntity<ApiResponse>
      */
     @DeleteMapping("/topics/remove/{id}")
 
-    public ResponseEntity<?> removeUserTopic(@PathVariable int id, Authentication authentication) {
+    public ResponseEntity<ApiResponse> removeUserTopic(@PathVariable int id, Authentication authentication) {
 
         int userId = ((User) authentication.getPrincipal()).getId();
         User userToSave = userService.getUserById(userId);
@@ -145,18 +165,14 @@ public class UserController {
     }
 
     /**
-     * @param authentication auth
-     * @return UserResponseDto
+     * @param authentication
+     * @return ResponseEntity<PostListDto<
      */
     @GetMapping("/feed")
     public ResponseEntity<PostListDto> getUserFeed(Authentication authentication) {
 
         int userId = ((User) authentication.getPrincipal()).getId();
-        User userFound = userService.getUserById(userId);
-        List<Integer> topicIds = userFound.getTopics().stream()
-                .map((topic -> topic.getId()))
-                .toList();
-        List<Post> posts = postService.getUserFeed(topicIds);
+        List<Post> posts = postService.getUserFeed(userId);
         List<PostDto> postDtoList = posts.stream()
                 .map((post) -> new PostDto(post))
                 .collect(Collectors.toList());
