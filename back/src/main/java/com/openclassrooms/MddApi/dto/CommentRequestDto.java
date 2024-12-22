@@ -6,9 +6,6 @@ import lombok.Data;
 @Data
 public class CommentRequestDto {
 
-    @NotEmpty(message = "L'identifiant de l'auteur est requis")
-    private String author_id;
-
     @NotEmpty(message = "L'identifiant de l'article est requis")
     private String post_id;
 

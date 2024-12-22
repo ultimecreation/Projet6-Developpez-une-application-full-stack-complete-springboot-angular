@@ -25,7 +25,6 @@ import com.openclassrooms.MddApi.services.PostService;
 import com.openclassrooms.MddApi.services.UserService;
 
 import jakarta.validation.Valid;
-import javafx.scene.control.ListCell;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,22 +51,16 @@ public class CommentController {
                 .map((comment) -> new CommentDto(comment))
                 .collect(Collectors.toList());
         CommentListDto commentListToReturn = new CommentListDto(commentDtoList);
-        // Comment comment = Comment.builder()
-        // .author(author)
-        // .post(post)
-        // .content(commentRequestDto.getContent())
-        // .build();
-        // commentService.createComment(comment);
 
-        // ApiResponse apiResponse = ApiResponse.builder().message("Commentaire créé
-        // !").build();
         return ResponseEntity.ok(commentListToReturn);
     }
 
     @PostMapping("/comments")
-    public ResponseEntity<ApiResponse> createComment(@Valid @RequestBody CommentRequestDto commentRequestDto) {
+    public ResponseEntity<ApiResponse> createComment(@Valid @RequestBody CommentRequestDto commentRequestDto,
+            Authentication authentication) {
 
-        User author = userService.getUserById(Integer.parseInt(commentRequestDto.getAuthor_id()));
+        int userId = ((User) authentication.getPrincipal()).getId();
+        User author = userService.getUserById(userId);
         Post post = postService.getPostById(Integer.parseInt(commentRequestDto.getPost_id()));
 
         Comment comment = Comment.builder()

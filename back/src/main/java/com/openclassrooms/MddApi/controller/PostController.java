@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -63,8 +64,10 @@ public class PostController {
 
     @PostMapping("/posts")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ApiResponse> createPost(@Valid @RequestBody PostRequestDto postRequestDto) {
-        User author = userService.getUserById(Integer.parseInt(postRequestDto.getAuthor_id()));
+    public ResponseEntity<ApiResponse> createPost(@Valid @RequestBody PostRequestDto postRequestDto,
+            Authentication authentication) {
+        int userId = ((User) authentication.getPrincipal()).getId();
+        User author = userService.getUserById(userId);
         Topic topic = topicService.getTopicById(Integer.parseInt(postRequestDto.getTopic_id()));
         Post post = Post.builder()
                 .author(author)

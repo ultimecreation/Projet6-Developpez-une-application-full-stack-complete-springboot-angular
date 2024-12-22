@@ -1,12 +1,10 @@
 package com.openclassrooms.MddApi.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.MddApi.dto.ApiResponse;
 import com.openclassrooms.MddApi.dto.PostDto;
 import com.openclassrooms.MddApi.dto.PostListDto;
+import com.openclassrooms.MddApi.dto.TopicDto;
+import com.openclassrooms.MddApi.dto.TopicListDto;
 import com.openclassrooms.MddApi.dto.UpdateProfileRequestDto;
 import com.openclassrooms.MddApi.dto.UserResponseDto;
 import com.openclassrooms.MddApi.entity.Post;
@@ -99,9 +99,12 @@ public class UserController {
 
         int userId = ((User) authentication.getPrincipal()).getId();
         User userFound = userService.getUserById(userId);
+        List<TopicDto> topicDtoList = userFound.getTopics().stream()
+                .map((topic) -> new TopicDto(topic))
+                .collect(Collectors.toList());
+        TopicListDto topicListToReturn = new TopicListDto(topicDtoList);
 
-        ApiResponse apiResponse = ApiResponse.builder().message("Thème ajouté !").build();
-        return ResponseEntity.ok(userFound.getTopics());
+        return ResponseEntity.ok(topicListToReturn);
     }
 
     /**

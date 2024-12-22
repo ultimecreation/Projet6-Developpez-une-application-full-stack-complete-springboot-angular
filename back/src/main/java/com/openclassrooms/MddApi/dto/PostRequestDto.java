@@ -9,9 +9,6 @@ public class PostRequestDto {
     @NotEmpty(message = "L'identifiant du theme est requis")
     private String topic_id;
 
-    @NotEmpty(message = "L'identifiant du l'auteur est requis")
-    private String author_id;
-
     @NotEmpty(message = "Le titre est requis")
     private String title;
 
