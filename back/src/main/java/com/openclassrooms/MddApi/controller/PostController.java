@@ -1,5 +1,6 @@
 package com.openclassrooms.MddApi.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,9 +71,10 @@ public class PostController {
                 .topic(topic)
                 .title(postRequestDto.getTitle())
                 .content(postRequestDto.getContent())
+                .created_at(LocalDateTime.now())
                 .build();
         postService.save(post);
-        ApiResponse apiResponse = ApiResponse.builder().message("Post Created").build();
+        ApiResponse apiResponse = ApiResponse.builder().message("Article créé !").build();
         return ResponseEntity.ok(apiResponse);
     }
 
