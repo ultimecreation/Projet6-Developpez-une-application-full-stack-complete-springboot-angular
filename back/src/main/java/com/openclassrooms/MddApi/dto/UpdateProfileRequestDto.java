@@ -7,7 +7,8 @@ import lombok.Data;
 @Data
 public class UpdateProfileRequestDto {
 
-    private int id;
+    @NotEmpty(message = "L'identifiant de l'utilisateur est requis")
+    private String id;
 
     @NotEmpty(message = "Le nom d'utilisateur est requis")
     private String username;

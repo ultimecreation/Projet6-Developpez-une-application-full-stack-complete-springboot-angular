@@ -102,45 +102,4 @@ public class AuthController {
 
     }
 
-    /**
-     * @param authentication auth
-     * @return UserResponseDto
-     */
-    @GetMapping("/profile")
-    public ResponseEntity<UserResponseDto> profile(Authentication authentication) {
-        var user = (User) authentication.getPrincipal();
-
-        UserResponseDto userToReturn = new UserResponseDto(user);
-        return ResponseEntity.ok(userToReturn);
-    }
-
-    /**
-     * @param authentication auth
-     * @return UserResponseDto
-     */
-    @PutMapping("/profile")
-    public ResponseEntity<ApiResponse> profileUpdate(
-            @Valid @RequestBody UpdateProfileRequestDto updateProfileRequestDto,
-            Authentication authentication) {
-
-        User userToUpdate = userService.getUserById(updateProfileRequestDto.getId());
-        userToUpdate.setUsername(updateProfileRequestDto.getUsername());
-        userToUpdate.setEmail(updateProfileRequestDto.getEmail());
-        if (updateProfileRequestDto.getPassword() != "") {
-            String hashedPassword = passwordEncoder.encode(updateProfileRequestDto.getPassword());
-            userToUpdate.setPassword(hashedPassword);
-        }
-        userService.saveUser(userToUpdate);
-
-        // authenticationManager.authenticate( new
-        // UsernamePasswordAuthenticationToken(userToUpdate.getEmail(),
-        // userToUpdate.getPassword()));
-
-        ApiResponse apiResponse = ApiResponse.builder()
-                .jwtToken(jwtService.generateJwtToken(userToUpdate))
-                .build();
-        return ResponseEntity.ok(apiResponse);
-        // UserResponseDto userToReturn = new UserResponseDto(userToUpdate);
-        // return ResponseEntity.ok(userToReturn);
-    }
 }

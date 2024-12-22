@@ -3,6 +3,7 @@ package com.openclassrooms.MddApi.entity;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -16,6 +17,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -35,13 +39,9 @@ public class User implements UserDetails {
 
     private String password;
 
-    // @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval =
-    // true)
-    // private List<Rental> rentals;
-
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval =
-    // true)
-    // private List<Message> messages;
+    @ManyToMany
+    @JoinTable(name = "user_topics", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "topic_id"))
+    private Set<Topic> topics;
 
     @JsonFormat(pattern = "yyyy-dd-MM")
     @CreatedDate
