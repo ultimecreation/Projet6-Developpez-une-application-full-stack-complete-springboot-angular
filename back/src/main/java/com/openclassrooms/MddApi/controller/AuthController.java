@@ -8,9 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -19,12 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.MddApi.dto.ApiResponse;
 import com.openclassrooms.MddApi.dto.LoginDto;
 import com.openclassrooms.MddApi.dto.RegisterDto;
-import com.openclassrooms.MddApi.dto.UpdateProfileRequestDto;
-import com.openclassrooms.MddApi.dto.UserResponseDto;
 import com.openclassrooms.MddApi.entity.User;
 import com.openclassrooms.MddApi.services.JwtService;
 import com.openclassrooms.MddApi.services.UserService;
-import org.springframework.security.core.Authentication;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -102,45 +97,4 @@ public class AuthController {
 
     }
 
-    /**
-     * @param authentication auth
-     * @return UserResponseDto
-     */
-    @GetMapping("/profile")
-    public ResponseEntity<UserResponseDto> profile(Authentication authentication) {
-        var user = (User) authentication.getPrincipal();
-
-        UserResponseDto userToReturn = new UserResponseDto(user);
-        return ResponseEntity.ok(userToReturn);
-    }
-
-    /**
-     * @param authentication auth
-     * @return UserResponseDto
-     */
-    @PutMapping("/profile")
-    public ResponseEntity<ApiResponse> profileUpdate(
-            @Valid @RequestBody UpdateProfileRequestDto updateProfileRequestDto,
-            Authentication authentication) {
-
-        User userToUpdate = userService.getUserById(updateProfileRequestDto.getId());
-        userToUpdate.setUsername(updateProfileRequestDto.getUsername());
-        userToUpdate.setEmail(updateProfileRequestDto.getEmail());
-        if (updateProfileRequestDto.getPassword() != "") {
-            String hashedPassword = passwordEncoder.encode(updateProfileRequestDto.getPassword());
-            userToUpdate.setPassword(hashedPassword);
-        }
-        userService.saveUser(userToUpdate);
-
-        // authenticationManager.authenticate( new
-        // UsernamePasswordAuthenticationToken(userToUpdate.getEmail(),
-        // userToUpdate.getPassword()));
-
-        ApiResponse apiResponse = ApiResponse.builder()
-                .jwtToken(jwtService.generateJwtToken(userToUpdate))
-                .build();
-        return ResponseEntity.ok(apiResponse);
-        // UserResponseDto userToReturn = new UserResponseDto(userToUpdate);
-        // return ResponseEntity.ok(userToReturn);
-    }
 }
