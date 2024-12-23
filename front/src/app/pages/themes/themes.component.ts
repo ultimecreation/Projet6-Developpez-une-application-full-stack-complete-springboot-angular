@@ -14,7 +14,6 @@ import { Subscription } from 'rxjs';
 })
 export class ThemesComponent implements OnInit {
 
-    private authService = inject(AuthService)
     private themeService = inject(ThemeService)
     private destroyRef = inject(DestroyRef)
 

@@ -29,7 +29,7 @@ export class ThemeService {
     // }
 
     getSubscribedThemes(): Observable<{ topics: ThemeInterface[] }> {
-        return this.http.get<{ topics: ThemeInterface[] }>('http://localhost:8080/api/user/topics-to-subscribe', {
+        return this.http.get<{ topics: ThemeInterface[] }>('http://localhost:8080/api/user/topics', {
             headers: {
                 "Authorization": this.bearerToken!
             }
