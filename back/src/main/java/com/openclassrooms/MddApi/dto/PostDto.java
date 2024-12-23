@@ -18,7 +18,7 @@ public class PostDto {
     private String title;
     private String content;
 
-    @JsonFormat(pattern = "yyyy-dd-MM")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime created_at;
 
     public PostDto(Post post) {
