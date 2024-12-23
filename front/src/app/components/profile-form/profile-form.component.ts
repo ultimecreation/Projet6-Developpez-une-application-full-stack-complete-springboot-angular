@@ -1,9 +1,9 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UpdateRequestInterface } from '../../interfaces/UpdateProfileRequestInterface';
 import { Subscription } from 'rxjs';
+import { UserService } from '../../services/user.service';
+import { UpdateProfileRequestInterface } from '../../interfaces/UpdateProfileRequestInterface';
 
 
 @Component({
@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class ProfileFormComponent implements OnInit {
 
+    private userService = inject(UserService)
     private authService = inject(AuthService)
     private destroyRef = inject(DestroyRef)
     subscription!: Subscription
@@ -24,7 +25,7 @@ export class ProfileFormComponent implements OnInit {
 
     ngOnInit(): void {
 
-        const subscription = this.authService.getUserInfos().subscribe({
+        const subscription = this.userService.getUserInfos().subscribe({
             next: (data: any) => {
                 this.userInfos = data
 
@@ -46,8 +47,8 @@ export class ProfileFormComponent implements OnInit {
         this.errorMsg = ""
         $event.preventDefault()
         const { username, email, password } = this.form.value
-        const updateProfileRequest: UpdateRequestInterface = { id: this.userInfos.id, username, email, password }
-        this.authService.updateProfile(updateProfileRequest).subscribe({
+        const updateProfileRequest: UpdateProfileRequestInterface = { id: this.userInfos.id, username, email, password }
+        this.userService.updateProfile(updateProfileRequest).subscribe({
             next: (data: any) => {
                 if (data.jwtToken) {
                     const success = this.authService.saveUserToLocalStorage(data.jwtToken)
