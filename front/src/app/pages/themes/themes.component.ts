@@ -22,22 +22,12 @@ export class ThemesComponent implements OnInit {
 
     ngOnInit(): void {
         let subscription: Subscription
-        if (this.authService.isAuthenticated()) {
-            subscription = this.themeService.getUnsubscribedThemes().subscribe({
-                next: (data) => this.themes = [...data.topics],
-                error: (err) => {
-                    console.log(err)
-                }
-            })
-        } else {
-            subscription = this.themeService.getAllThemes().subscribe({
-                next: (data) => this.themes = [...data.topics],
-                error: (err) => {
-                    console.log(err)
-                }
-            })
-        }
-
+        subscription = this.themeService.getAllThemes().subscribe({
+            next: (data) => this.themes = [...data.topics],
+            error: (err) => {
+                console.log(err)
+            }
+        })
         this.destroyRef.onDestroy(() => subscription.unsubscribe())
     }
 

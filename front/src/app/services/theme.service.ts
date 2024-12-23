@@ -20,13 +20,13 @@ export class ThemeService {
         });
     }
 
-    getUnsubscribedThemes(): Observable<{ topics: ThemeInterface[] }> {
-        return this.http.get<{ topics: ThemeInterface[] }>('http://localhost:8080/api/user/topics-to-subscribe', {
-            headers: {
-                "Authorization": this.bearerToken!
-            }
-        });
-    }
+    // getUnsubscribedThemes(): Observable<{ topics: ThemeInterface[] }> {
+    //     return this.http.get<{ topics: ThemeInterface[] }>('http://localhost:8080/api/user/topics-to-subscribe', {
+    //         headers: {
+    //             "Authorization": this.bearerToken!
+    //         }
+    //     });
+    // }
 
     getSubscribedThemes(): Observable<{ topics: ThemeInterface[] }> {
         return this.http.get<{ topics: ThemeInterface[] }>('http://localhost:8080/api/user/topics-to-subscribe', {
