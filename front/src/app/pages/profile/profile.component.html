@@ -1,3 +1,6 @@
 <app-navbar></app-navbar>
-<app-page-header title="Profil utilisateur" [invisible]=true />
-<app-profile-form>
+<app-page-header title="Profil utilisateur" [goBackBtnInvisible]=true />
+<app-profile-form />
+<hr>
+<h2 class="text-center fw-bold d-none d-md-block">Abonnements</h2>
+<app-theme-list [themes]="themes"></app-theme-list>

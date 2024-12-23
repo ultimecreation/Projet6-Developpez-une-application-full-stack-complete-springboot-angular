@@ -9,7 +9,7 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
     selector: 'app-register',
-    imports: [PageHeaderComponent, ReactiveFormsModule, NavbarComponent],
+    imports: [PageHeaderComponent, ReactiveFormsModule],
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss'
 })

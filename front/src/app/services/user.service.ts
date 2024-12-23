@@ -10,9 +10,7 @@ import { UpdateProfileRequestInterface } from '../interfaces/UpdateProfileReques
 export class UserService {
 
     private http = inject(HttpClient)
-    private router = inject(Router)
     private bearerToken: string | null = localStorage.getItem('mdd-token')
-    private decodedToken: any = {}
     isAuthenticated = signal<Boolean>(false)
     getUserInfos() {
 
@@ -22,7 +20,6 @@ export class UserService {
             }
         });
     }
-
 
     updateProfile(updateProfileRequest: UpdateProfileRequestInterface) {
         return this.http.put('http://localhost:8080/api/user/profile',
@@ -34,6 +31,4 @@ export class UserService {
             }
         )
     }
-
-
 }
