@@ -44,8 +44,8 @@ export class ThemeService {
         });
     }
 
-    addUserThemeSubscription(themeId: string) {
-        return this.http.get(`http://localhost:8080/api/user/topics/add/${themeId}`, {
+    addUserThemeSubscription(themeId: string): Observable<Object> {
+        return this.http.post(`http://localhost:8080/api/user/topics/add/${themeId}`, null, {
             headers: {
                 "Authorization": this.bearerToken!
             }
