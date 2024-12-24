@@ -3,7 +3,12 @@
     <div class="col">
         <div class="card  m-3">
             <div class="card-body bg-secondary">
-                <h5 class="card-title fw-bold">{{article.title}}</h5>
+                <h5 class="card-title fw-bold">
+                    <a routerLink="/articles/{{article.id}}">
+                        {{article.title}}
+                    </a>
+
+                </h5>
                 <div class="d-flex my-3">
                     <div class="col-6">Date : {{article.created_at}} </div>
                     <div class="col-6">Auteur : {{article.author_username}}</div>

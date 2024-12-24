@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from "../../../components/navbar/navbar.component";
 
 @Component({
-    selector: 'app-add-article',
+    selector: 'app-article-add',
     imports: [NavbarComponent],
-    templateUrl: './add-article.component.html',
-    styleUrl: './add-article.component.scss'
+    templateUrl: './article-add.component.html',
+    styleUrl: './article-add.component.scss'
 })
-export class AddArticleComponent {
+export class ArticleAddComponent {
 
 }

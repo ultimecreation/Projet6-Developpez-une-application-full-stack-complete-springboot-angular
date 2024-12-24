@@ -28,8 +28,8 @@ export class ArticleService {
         });
     }
 
-    getPostById(id: string): Observable<{ topics: ArticleInterface[] }> {
-        return this.http.get<{ topics: ArticleInterface[] }>(`http://localhost:8080/api/posts/${id}`, {
+    getPostById(id: string): Observable<ArticleInterface> {
+        return this.http.get<ArticleInterface>(`http://localhost:8080/api/posts/${id}`, {
             headers: {
                 "Authorization": this.bearerToken!
             }

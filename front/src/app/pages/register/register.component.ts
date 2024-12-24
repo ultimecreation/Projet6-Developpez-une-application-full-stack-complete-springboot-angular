@@ -5,7 +5,6 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { RegisterRequestInterface } from '../../interfaces/RegisterRequestInterface';
 import { Location } from '@angular/common';
-import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
     selector: 'app-register',
