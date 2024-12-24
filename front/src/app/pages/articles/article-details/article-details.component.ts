@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, DestroyRef, inject, Input, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, Input, input, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
 import { NavbarComponent } from "../../../components/navbar/navbar.component";
 import { Location } from '@angular/common';
 import { ArticleService } from '../../../services/article.service';
@@ -14,8 +14,7 @@ import { CommentFormComponent } from "../../../components/comment-form/comment-f
     templateUrl: './article-details.component.html',
     styleUrl: './article-details.component.scss'
 })
-export class ArticleDetailsComponent implements OnInit {
-
+export class ArticleDetailsComponent implements OnInit, OnChanges {
 
     private location = inject(Location)
     private articleService = inject(ArticleService)
@@ -33,7 +32,10 @@ export class ArticleDetailsComponent implements OnInit {
         this.articleId.set(this.activatedRoute.snapshot.paramMap.get('id')!)
         this.fetchArticle(this.articleId());
         this.fetchcomments(this.articleId());
+    }
 
+    ngOnChanges(changes: SimpleChanges): void {
+        this.fetchArticle(this.articleId());
     }
 
     private fetchArticle(articleId: string) {

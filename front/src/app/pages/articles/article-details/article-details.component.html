@@ -26,8 +26,8 @@
     <h2>Commentaires</h2>
     @for (comment of comments(); track comment.id) {
     <div class="card  my-3 border-0">
-        <div class="card-body d-flex flex-column flex-md-row flex-md-row-reverse me-md-auto">
-            <p class="bg-secondary p-3 rounded-3 align-self-start">{{comment.content}}</p>
+        <div class="card-body d-flex flex-column flex-md-row-reverse justify-content-end position-relative w-100 p-0">
+            <p class="bg-secondary p-3 rounded-3 align-self-start w-100 " id="content">{{comment.content}}</p>
             <p class="align-self-end me-md-5 align-self-md-start">{{comment.author_username}}</p>
         </div>
     </div>

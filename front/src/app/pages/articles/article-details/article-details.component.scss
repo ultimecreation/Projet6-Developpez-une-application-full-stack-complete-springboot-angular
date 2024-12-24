@@ -7,3 +7,9 @@ hr {
   height: 3px;
   background-color: black;
 }
+#content {
+  @media screen and (min-width: 767px) {
+    max-width: 80%;
+    left: 0;
+  }
+}
