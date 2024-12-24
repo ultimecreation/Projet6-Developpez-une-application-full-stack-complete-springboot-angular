@@ -20,14 +20,24 @@ export class ThemesComponent implements OnInit {
     themes: ThemeInterface[] = []
 
     ngOnInit(): void {
-        let subscription: Subscription
-        subscription = this.themeService.getAllThemes().subscribe({
+        const getAllThemesSubscription = this.themeService.getAllThemes().subscribe({
             next: (data) => this.themes = [...data.topics],
             error: (err) => {
                 console.log(err)
             }
         })
-        this.destroyRef.onDestroy(() => subscription.unsubscribe())
+        this.destroyRef.onDestroy(() => getAllThemesSubscription.unsubscribe())
     }
 
+
+    handleSubmitForChild($event: { themeId: string; }) {
+        const themeId = $event.themeId
+        const addUserThemeSubscription = this.themeService.addUserThemeSubscription(themeId).subscribe()
+        this.destroyRef.onDestroy(() => addUserThemeSubscription.unsubscribe())
+    }
+
+
+    private fetchThemes = () => {
+
+    }
 }

@@ -8,7 +8,8 @@
                     card's
                     content.</p>
                 <div class="w-100 text-center">
-                    <button class="btn btn-primary fw-bold">S'abonner</button>
+                    <button class="btn btn-primary fw-bold"
+                        (click)="handleSubmitEvent.emit({themeId:theme.id})">{{btnText()}}</button>
                 </div>
             </div>
         </div>

@@ -35,4 +35,22 @@ export class ThemeService {
             }
         });
     }
+
+    removeUserThemeSubscription(themeId: string): Observable<string> {
+        return this.http.delete<string>(`http://localhost:8080/api/user/topics/remove/${themeId}`, {
+            headers: {
+                "Authorization": this.bearerToken!
+            }
+        });
+    }
+
+    addUserThemeSubscription(themeId: string) {
+        return this.http.get(`http://localhost:8080/api/user/topics/add/${themeId}`, {
+            headers: {
+                "Authorization": this.bearerToken!
+            }
+        });
+    }
+
+
 }

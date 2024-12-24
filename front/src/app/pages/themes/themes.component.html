@@ -1,3 +1,3 @@
 <app-navbar></app-navbar>
 
-<app-theme-list [themes]="themes">
+<app-theme-list [themes]="themes" (handleSubmitEvent)="handleSubmitForChild($event)" />

@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, input, OnInit, output } from '@angular/core';
 import { ThemeInterface } from '../../interfaces/ThemeInterface';
 
 @Component({
@@ -9,4 +9,6 @@ import { ThemeInterface } from '../../interfaces/ThemeInterface';
 })
 export class ThemeListComponent {
     themes = input<ThemeInterface[] | undefined>([])
+    btnText = input("S'abonner")
+    handleSubmitEvent = output<{ themeId: string }>()
 }

@@ -3,4 +3,4 @@
 <app-profile-form />
 <hr>
 <h2 class="text-center fw-bold d-none d-md-block">Abonnements</h2>
-<app-theme-list [themes]="themes"></app-theme-list>
+<app-theme-list [themes]="themes" btnText="Se Désabonner" (handleSubmitEvent)="handleSubmitForChild($event)" />
