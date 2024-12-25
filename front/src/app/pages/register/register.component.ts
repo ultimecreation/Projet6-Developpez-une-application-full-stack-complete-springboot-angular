@@ -5,11 +5,10 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { RegisterRequestInterface } from '../../interfaces/RegisterRequestInterface';
 import { Location } from '@angular/common';
-import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
     selector: 'app-register',
-    imports: [PageHeaderComponent, ReactiveFormsModule, NavbarComponent],
+    imports: [PageHeaderComponent, ReactiveFormsModule],
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss'
 })

@@ -1,0 +1,18 @@
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3  row-cols-lg-4">
+    @for (theme of themes(); track theme.id) {
+    <div class="col">
+        <div class="card  m-3">
+            <div class="card-body bg-secondary">
+                <h5 class="card-title fw-bold">{{theme.name}}</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's
+                    content.</p>
+                <div class="w-100 text-center">
+                    <button class="btn btn-primary fw-bold"
+                        (click)="handleSubmitEvent.emit({themeId:theme.id})">{{btnText()}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>

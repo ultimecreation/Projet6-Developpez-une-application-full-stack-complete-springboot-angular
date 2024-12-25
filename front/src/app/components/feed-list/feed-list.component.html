@@ -1,1 +1,13 @@
-<p>feed-list works!</p>
+<div class="d-flex justify-content-between flex-column flex-md-row ">
+    <a class="btn btn-primary mx-3  fw-bold" routerLink="/articles/add">Créer un article</a>
+    <button class="btn btn-default mx-3  fw-bold" (click)="handleSortToggle()">
+        Trier par
+        @if(sortByDesc()==true){
+        <i class="bi bi-arrow-down"></i>
+        }@else {
+        <i class="bi bi-arrow-up"></i>
+        }
+
+    </button>
+</div>
+<app-article-list [articles]="filteredArticles">

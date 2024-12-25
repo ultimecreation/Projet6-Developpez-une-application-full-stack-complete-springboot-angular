@@ -34,9 +34,9 @@ import com.openclassrooms.MddApi.services.UserService;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/user")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired

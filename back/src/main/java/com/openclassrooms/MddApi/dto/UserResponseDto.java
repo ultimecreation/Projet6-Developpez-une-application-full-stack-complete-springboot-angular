@@ -13,9 +13,9 @@ public class UserResponseDto {
     private int id;
     private String username;
     private String email;
-    @JsonFormat(pattern = "yyyy-dd-MM")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date created_at;
-    @JsonFormat(pattern = "yyyy-dd-MM")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updated_at;
 
     public UserResponseDto(User user) {

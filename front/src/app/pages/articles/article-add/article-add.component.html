@@ -1,0 +1,93 @@
+<app-navbar />
+<div class="card  my-3 border-0">
+    <div class="card-body ">
+        <div class=" d-block">
+            <div class="d-flex flex-column flex-md-row justify-content-between ">
+                <div (click)="handleGoBack()" class="justify-self-start">
+                    <i class="bi bi-arrow-left"></i>
+                </div>
+                <h1 class="mb-5 me-md-5">Créer un nouvel article</h1>
+                <div></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="col-md-6 mx-auto">
+    <form [formGroup]="form" (submit)="handleSubmit($event)">
+        <div class="mb-3">
+
+            <select class="form-select" aria-label="theme" aria-labelledby="theme" formControlName="theme">
+                <option value>Sélectionner un thème</option>
+                @for (theme of themes(); track theme.id) {
+
+                <option value="{{theme.id }}">{{theme.name}}</option>
+                }
+            </select>
+            @if(themeIsInvalid){
+            <div class="text-danger">
+                @if(theme?.hasError('required')){
+                Le thème est requis
+                }
+            </div>
+            }
+            @if(errors?.topic_id){
+            <div class="text-danger">
+                {{ errors.topic_id}}
+            </div>
+            }
+        </div>
+        <div class="mb-3">
+
+            <input type="text" class="form-control" id="title" formControlName="title" aria-label="title"
+                aria-labelledby="title" placeholder="Titre de l'article">
+
+            @if(titleIsInvalid){
+            <div class="text-danger">
+                @if(title?.hasError('required')){
+                Le titre est requis
+                }
+            </div>
+            }
+            @if(errors?.title){
+            <div class="text-danger">
+                {{ errors.title}}
+            </div>
+            }
+        </div>
+
+        <div class="mb-3">
+            <textarea name="content" id="content" formControlName="content" aria-label="content"
+                aria-labelledby="content" placeholder="Contenu de l'article" class="form-control"></textarea>
+            @if(contentIsInvalid){
+            <div class="text-danger">
+                @if( content?.hasError('required') ){
+                Le contenu est requis
+                }
+            </div>
+            }
+            @if(errors?.content){
+            <div class="text-danger">
+                {{ errors.content}}
+            </div>
+            }
+        </div>
+        @if(errors?.invalidCredentials){
+        <div class="text-danger mb-3">
+            {{errors?.invalidCredentials}}
+        </div>
+        }
+        @if(errorMsg){
+        <div class="text-danger mb-3">
+            {{errorMsg}}
+        </div>
+        }
+        <div class="mb-3 text-center">
+            <button type="submit" class="btn btn-primary  fw-bold">Créer</button>
+        </div>
+    </form>
+
+
+</div>

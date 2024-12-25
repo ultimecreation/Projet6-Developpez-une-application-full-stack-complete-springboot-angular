@@ -44,7 +44,7 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @JsonFormat(pattern = "yyyy-dd-MM")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @CreatedDate
     private LocalDateTime created_at;
 }

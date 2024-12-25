@@ -43,11 +43,11 @@ public class User implements UserDetails {
     @JoinTable(name = "user_topics", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "topic_id"))
     private Set<Topic> topics;
 
-    @JsonFormat(pattern = "yyyy-dd-MM")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @CreatedDate
     private Date created_at;
 
-    @JsonFormat(pattern = "yyyy-dd-MM")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @LastModifiedDate
     private Date updated_at;
 

@@ -11,7 +11,7 @@ import com.openclassrooms.MddApi.entity.Post;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
-    String sqlString = """
+    String findAllPostsByTopicsAndUserId = """
             SELECT p.* FROM posts p
             WHERE topic_id
             IN (
@@ -20,6 +20,14 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             )
             """;
 
-    @Query(value = sqlString, nativeQuery = true)
+    @Query(value = findAllPostsByTopicsAndUserId, nativeQuery = true)
     List<Post> findAllPostsByTopicsAndUserId(Integer userId);
+
+    String findAllOrderByCreatedAtDesc = """
+            SELECT p.* FROM posts p
+            ORDER BY created_at DESC
+            """;
+
+    @Query(value = findAllOrderByCreatedAtDesc, nativeQuery = true)
+    List<Post> findAllOrderByCreatedAtDesc();
 }
